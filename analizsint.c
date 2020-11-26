@@ -1,30 +1,30 @@
 #include "global.h"
 
-int preanálisis;
+int preanalisis;
 
-análsint() //Analiza sintácticamente y traduce la lista de la expresión
+void analsint() //Analiza sintácticamente y traduce la lista de la expresión
 {
-    preanálisis = análex();
-    while (preanálisis != FIN)
+    preanalisis = analex();
+    while (preanalisis != FIN)
     {
         expr();
         parea(';');
     }
-    
+
 }
 
-expr()
+void expr()
 {
     int t;
-    término();
+    termino();
     while(1)
-        switch (preanálisis)
+        switch (preanalisis)
         {
-        case '+': 
+        case '+':
         case '-':
-            t = preanálisis;
-            parea (preanálisis);
-            término();
+            t = preanalisis;
+            parea (preanalisis);
+            termino();
             emite(t, NINGUNO);
             continue;
         default:
@@ -32,19 +32,19 @@ expr()
         }
 }
 
-termino()
+void termino()
 {
     int t;
     factor();
     while (1)
-        switch (preanálisis)
+        switch (preanalisis)
         {
         case '*':
         case '/':
         case DIV:
         case MOD:
-            t = preanálisis;
-            parea(preanálisis);
+            t = preanalisis;
+            parea(preanalisis);
             factor();
             emite(t, NINGUNO);
             continue;
@@ -53,9 +53,9 @@ termino()
         }
 }
 
-factor()
+void factor()
 {
-    switch (preanálisis)
+    switch (preanalisis)
     {
     case '(':
         parea('(');
@@ -75,16 +75,16 @@ factor()
     }
 }
 
-parea(t)
+void parea(t)
     int t;
 {
-    if (preanálisis == t)
+    if (preanalisis == t)
     {
-        preanálisis = análex();
+        preanalisis = analex();
     }
     else
     {
         error("error de sintaxis");
     }
-    
+
 }

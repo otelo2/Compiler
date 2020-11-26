@@ -1,6 +1,6 @@
 #include "global.h"
 
-emite(t, tval) //Genera la salida
+void emite(t, tval) //Genera la salida
     int t, tval;
 {
     switch (t)

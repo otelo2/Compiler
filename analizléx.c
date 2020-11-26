@@ -1,10 +1,10 @@
 #include "global.h"
 
 char buflex[TAMBUFF];
-int numlínea = 1;
+int numlinea = 1;
 int valcomplex = NINGUNO;
 
-int análex() //Analizador léxico
+int analex() //Analizador léxico
 {
     int t;
     while (1)
@@ -16,18 +16,18 @@ int análex() //Analizador léxico
         }
         else if (t == '\n')
         {
-            numlínea++;
+            numlinea++;
         }
-        else if (isdigit(t)) //t es un dígito
+        else if (isdigit(t)!=0) //t es un dígito
         {
             ungetc(t, stdin);
             scanf("&d", &valcomplex);
             return NUM;
         }
-        else if (isalpha(t)) //t es una letra
+        else if (isalpha(t)!=0) //t es una letra
         {
             int p, b = 0;
-            while (isalnum(t)) //t es alfanumérico
+            while (isalnum(t)!=0) //t es alfanumérico
             {
                 buflex[b] = t;
                 t = getchar();

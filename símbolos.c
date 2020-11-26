@@ -13,13 +13,13 @@ int busca(s) //Devuelve la posición del elemento de entrada de s
     int p;
     for (p = ultent; p > 0; p--)
     {
-        if (srtcmp(tablasimb[p].aplex, s) == 0)
+        if (strcmp(tablasimb[p].aplex, s) == 0)
         {
             return p;
         }
         return 0;
     }
-    
+
 }
 
 int inserta(s, clex) //Devuelve la posición del elemento de entrada de s

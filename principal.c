@@ -3,6 +3,6 @@
 int main()
 {
     inic();
-    análsint();
+    analsint();
     exit(0); //Terminación con éxito
 }
