@@ -7,7 +7,7 @@ struct entrada palsclave[] =
     0, 0
 };
 
-inic() //Carga las palabras clave en la tabla de símbolos
+void inic() //Carga las palabras clave en la tabla de símbolos
 {
     struct entrada *p;
     for (p = palsclave; p->complex; p++)
