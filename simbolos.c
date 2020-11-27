@@ -11,14 +11,18 @@ int busca(s) //Devuelve la posición del elemento de entrada de s
     char s[];
 {
     int p;
-    for (p = ultent; p > 0; p--)
+    for (p = 1; p <= ultent; p++)
     {
+        //printf("%s \t %s\n", s, tablasimb[p].aplex);
+        //printf("len %d\t%d\n", strlen(tablasimb[p].aplex), strlen(s));
+
         if (strcmp(tablasimb[p].aplex, s) == 0)
         {
+          //printf("found it");
             return p;
         }
-        return 0;
     }
+    return 0;
 
 }
 
@@ -26,8 +30,11 @@ int inserta(s, clex) //Devuelve la posición del elemento de entrada de s
     char s[];
     int clex;
 {
-    int lon;
+    //printf("%i\n", clex);
+    int lon,i;
     lon = strlen(s); //strlen evalúa la longitud de s
+    /*for(i=0;i<=lon;i++)
+      printf("%d %d\n", ultent, (int)s[i]);*/
     if (ultent + 1 >= MAXSIMB)
     {
         error("tabla de símbolos llena");

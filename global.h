@@ -11,7 +11,7 @@
 #define DIV 257
 #define MOD 258
 #define ID 259
-#define FIN 260
+#define FIN 59 //ctrl+Z
 
 extern int valcomplex; /* valor del atributo del componente léxico */
 extern int numlinea;

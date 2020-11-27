@@ -5,6 +5,7 @@ int preanalisis;
 void analsint() //Analiza sintácticamente y traduce la lista de la expresión
 {
     preanalisis = analex();
+    //printf("analsint %i\n", preanalisis);
     while (preanalisis != FIN)
     {
         expr();
@@ -15,6 +16,7 @@ void analsint() //Analiza sintácticamente y traduce la lista de la expresión
 
 void expr()
 {
+    //printf("expr\t");
     int t;
     termino();
     while(1)
@@ -34,6 +36,7 @@ void expr()
 
 void termino()
 {
+    //printf("termino\t");
     int t;
     factor();
     while (1)
@@ -55,6 +58,7 @@ void termino()
 
 void factor()
 {
+    //printf("factor\t%d\n", preanalisis);
     switch (preanalisis)
     {
     case '(':
@@ -63,6 +67,7 @@ void factor()
         parea(')');
         break;
     case NUM:
+      //printf("NUM\n");
         emite(NUM, valcomplex);
         parea(NUM);
         break;
@@ -71,20 +76,23 @@ void factor()
         parea(ID);
         break;
     default:
-        error("error de sintaxis");
+        error("1. error de sintaxis");
     }
 }
 
 void parea(t)
     int t;
 {
+  //printf("match\n");
+
+    //printf("%i\t%i\n", t, preanalisis);
     if (preanalisis == t)
     {
         preanalisis = analex();
     }
     else
     {
-        error("error de sintaxis");
+        error("2. error de sintaxis");
     }
 
 }

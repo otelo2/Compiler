@@ -20,8 +20,10 @@ int analex() //Analizador léxico
         }
         else if (isdigit(t)!=0) //t es un dígito
         {
-            ungetc(t, stdin);
-            scanf("&d", &valcomplex);
+            //ungetc(t, stdin);
+            //scanf("&d", &valcomplex);
+            valcomplex=t-'0';
+            //printf("valcomplex %d\n", valcomplex );
             return NUM;
         }
         else if (isalpha(t)!=0) //t es una letra
@@ -29,6 +31,7 @@ int analex() //Analizador léxico
             int p, b = 0;
             while (isalnum(t)!=0) //t es alfanumérico
             {
+                //printf("%d", t);
                 buflex[b] = t;
                 t = getchar();
                 b++;
@@ -36,20 +39,24 @@ int analex() //Analizador léxico
                     error("error del compilador");
             }
             buflex[b] = FDC;
-            if (t != EOF)
+            //printf("%s\n", buflex);
+            if (t != EOF) //EOF?
                 ungetc(t, stdin);
             p = busca(buflex);
             if (p == 0)
                 p = inserta(buflex, ID);
             valcomplex = p;
+            //printf("valcomplex %d\n", tablasimb[valcomplex]);
             return tablasimb[p].complex;
         }
-        else if (t == EOF)
+        else if (t == 59)
         {
+            //printf("FIN\n");
             return FIN;
         }
         else
         {
+            //printf("NINGUNO");
             valcomplex = NINGUNO;
             return t;
         }
