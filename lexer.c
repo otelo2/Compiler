@@ -4,7 +4,7 @@ char buflex[TAMBUFF];
 int numlinea = 1;
 int valcomplex = NINGUNO;
 
-int analex() //Analizador léxico
+int analex(int caso) //Analizador léxico
 {
     int t;
     while (1)
@@ -31,7 +31,7 @@ int analex() //Analizador léxico
             int p, b = 0;
             while (isalnum(t)!=0) //t es alfanumérico
             {
-                //printf("%d", t);
+                printf("%c\n", (char)t);
                 buflex[b] = t;
                 t = getchar();
                 b++;
@@ -53,6 +53,32 @@ int analex() //Analizador léxico
         {
             //printf("FIN\n");
             return FIN;
+        }
+        else if((((t<63)&&(t>59))||(t==33))&&(caso!=2))
+        {
+          printf("caso %d\n", caso);
+          int p, b = 0;
+          while ((t<63)&&(t>59)||(t==33)) //t es alfanumérico
+          {
+              //printf("%d", t);
+              buflex[b] = t;
+              t = getchar();
+              b++;
+              if (b >= TAMBUFF)
+                  error("error del compilador");
+          }
+          buflex[b] = FDC;
+          //printf("%s\n", buflex);
+          if (t != EOF) //EOF?
+              ungetc(t, stdin);
+          p = busca(buflex);
+          if (p == 0)
+              p = inserta(buflex, ID);
+          valcomplex = p;
+          //printf("valcomplex %d\n", tablasimb[valcomplex]);
+          return tablasimb[p].complex;
+          //switch(t)
+
         }
         else
         {

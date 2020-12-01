@@ -28,6 +28,7 @@
 
 extern int valcomplex; /* valor del atributo del componente léxico */
 extern int numlinea;
+
 struct entrada { /* forma del elemento de entrada de la tabla de símbolos */
 char *aplex;
 int complex;
@@ -35,7 +36,7 @@ int complex;
 extern struct entrada tablasimb[]; /* tabla de símbolos */
 
 //lexer.c
-int analex();
+int analex(int caso);
 
 //parser.c
 void analsint();

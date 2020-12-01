@@ -7,14 +7,18 @@ int temp, tempval, te;
 int caso;
 //infinite pseudo registers
 int regnum;
+int boo;
 
 void analsint() //Analiza sintácticamente y traduce la lista de la expresión
 {
-    preanalisis = analex();
+    caso=0;
+    boo=0;
+    preanalisis = analex(caso);
     temp = preanalisis;
     while (preanalisis != FIN)
     {
         caso=0;
+        boo=0;
         regnum=1;
         prop();
         parea(';');
@@ -103,7 +107,7 @@ void factor()
         {
             preanalisis=te;
             valcomplex=temp;
-            caso=0;
+            //caso=0;
             //printf("CASO1\n");
         }
         break;
@@ -115,12 +119,14 @@ void factor()
 void parea(t)
     int t;
 {
+  if(t==':')
+    caso=2;
   //printf("match\n");
   //printf("A %d\t%d\n", t, preanalisis);
     if (preanalisis == t)
     {
-        preanalisis = analex();
-        //printf("A %d\t%d\n", t, preanalisis);
+        preanalisis = analex(caso);
+        //printf("A2 %d\t%d\n", t, preanalisis);
     }
     else
     {
@@ -137,13 +143,17 @@ void parea(t)
 void prop()
 {
   int t;
+  //printf("1Boo: %d\n", boo);
+  boo++;
+  //printf("2Boo: %d\n", boo);
+
     switch(preanalisis)
     {
       case ID:
         //temp tiene el ID
         temp=preanalisis;
         tempval=valcomplex;
-        preanalisis=analex();
+        preanalisis=analex(caso);
         parea(':');
         //preanalisis=+
         if(caso==1)
@@ -151,33 +161,44 @@ void prop()
         else
         {
           parea('=');
-          //exprbool();
+          exprbool();
           //falta imprimir la instrucción
           emite(t, NINGUNO);
-          preanalisis=analex();
+          //printf("Asignacion\n");
+          caso=0;
+          boo++;
         }
         break;
       case CONI:
-        preanalisis=analex();
-        //exprbool();
+        preanalisis=analex(caso);
+        exprbool();
         parea(CONE);
         prop();
-      //  preanalisis=analex();
+        boo++;
         break;
       case LOOPI:
-        preanalisis=analex();
-        //exprbool();
+        preanalisis=analex(caso);
+        exprbool();
         parea(LOOPE);
         prop();
+        boo++;
         break;
       case PROCI:
         //opc_prop();
-        preanalisis=analex();
+        preanalisis=analex(caso);
         parea(PROCE);
+        boo++;
         break;
       default:
         expr();
+        boo++;
     }
+    //printf("3Boo: %d\n", boo);
+    if(boo==1)
+      preanalisis=analex(caso);
+    else
+      boo--;
+    //printf("4Boo: %d\n", boo);
 }
 
 void exprbool()
@@ -231,12 +252,13 @@ void terminobool()
 
 void factorbool()
 {
-  //  printf("factor\t%d\n", preanalisis);
+    //printf("factor\t%d\n", preanalisis);
     switch (preanalisis)
     {
     case NUM:
       //printf("NUM\n");
-        emite(NUM, valcomplex);
+      //  emite(NUM, valcomplex);
+      //printf("NUM %d\n", regnum);
         parea(NUM);
         break;
     case ID:
