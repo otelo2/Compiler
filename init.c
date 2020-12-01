@@ -4,6 +4,19 @@ struct entrada palsclave[] =
 {
     "div", DIV,
     "mod", MOD,
+    //modification
+    "if", CONI,
+    "then", CONE,
+    "while", LOOPI,
+    "do", LOOPE,
+    "begin", PROCI,
+    "end", PROCE,
+    "<", LES,
+    "<=", LESE,
+    ">", BIG,
+    ">=", BIGE,
+    "==", EQ,
+    "!=", NEQ,
     0, 0
 };
 

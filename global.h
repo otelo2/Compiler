@@ -11,6 +11,19 @@
 #define DIV 257
 #define MOD 258
 #define ID 259
+//modification
+#define CONI 600 //if
+#define CONE 605 //then
+#define LOOPI 610 //while
+#define LOOPE 615 //do
+#define PROCI 620 //begin
+#define PROCE 625 //end
+#define LES 650
+#define LESE 651
+#define BIG 652
+#define BIGE 653
+#define EQ 654
+#define NEQ 655
 #define FIN 59 //ctrl+Z
 
 extern int valcomplex; /* valor del atributo del componente léxico */
@@ -26,10 +39,16 @@ int analex();
 
 //parser.c
 void analsint();
+void prop();
+void exprbool();
 void expr();
 void termino();
+void terminobool();
 void factor();
+void factorbool();
 void parea(int t);
+void prop_list();
+void opc_prop();
 
 //emitter.c
 void emite (int t,int tval);
