@@ -23,6 +23,8 @@ int analex(int caso) //Analizador léxico
             //ungetc(t, stdin);
             //scanf("&d", &valcomplex);
             valcomplex=t-'0';
+            //while(isdigit(t)!=0)
+            //  valcomplex=(valcomplex*10)+(t-'0');
             //printf("valcomplex %d\n", valcomplex );
             return NUM;
         }
@@ -31,7 +33,7 @@ int analex(int caso) //Analizador léxico
             int p, b = 0;
             while (isalnum(t)!=0) //t es alfanumérico
             {
-                printf("%c\n", (char)t);
+                //printf("%c\n", (char)t);
                 buflex[b] = t;
                 t = getchar();
                 b++;
@@ -56,7 +58,7 @@ int analex(int caso) //Analizador léxico
         }
         else if((((t<63)&&(t>59))||(t==33))&&(caso!=2))
         {
-          printf("caso %d\n", caso);
+          //printf("caso %d\n", caso);
           int p, b = 0;
           while ((t<63)&&(t>59)||(t==33)) //t es alfanumérico
           {

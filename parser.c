@@ -95,12 +95,20 @@ void factor()
         break;
     case NUM:
       //printf("NUM\n");
-        emite(NUM, valcomplex);
+        if((caso==5)||(caso==2))
+          emite(MET, valcomplex);
+        else
+          emite(NUM, valcomplex);
         parea(NUM);
         break;
     case ID:
         //printf("ID\n");
-        emite(ID, valcomplex);
+        if(caso==2)
+          emite(VALD, valcomplex);
+        else if(caso==5)
+          emite(METD, valcomplex);
+        else
+          emite(ID, valcomplex);
         if(caso!=1)
           parea(ID);
         else
@@ -160,11 +168,10 @@ void prop()
           expr();
         else
         {
+          emite(VALI, tempval);
           parea('=');
-          exprbool();
-          //falta imprimir la instrucción
-          emite(t, NINGUNO);
-          //printf("Asignacion\n");
+          expr();
+          emite(ASI, NINGUNO);
           caso=0;
           boo++;
         }
@@ -172,26 +179,39 @@ void prop()
       case CONI:
         preanalisis=analex(caso);
         exprbool();
+        emite(CONI, NINGUNO);
         parea(CONE);
         prop();
+        emite(CONE, NINGUNO);
         boo++;
         break;
       case LOOPI:
+        emite(TEST, NINGUNO);
         preanalisis=analex(caso);
         exprbool();
+        emite(LOOPI, NINGUNO);
         parea(LOOPE);
         prop();
+        emite(TEST+1, NINGUNO);
+        emite(LOOPE, NINGUNO);
         boo++;
         break;
       case PROCI:
-        //opc_prop();
+        emite(PROCI, NINGUNO);
         preanalisis=analex(caso);
+        opc_prop();
         parea(PROCE);
+        emite(PROCE, NINGUNO);
         boo++;
         break;
       default:
-        expr();
-        boo++;
+        if(caso==0)
+        {
+          expr();
+          boo++;
+        }
+        else
+          error("4. error de sintaxis");
     }
     //printf("3Boo: %d\n", boo);
     if(boo==1)
@@ -204,7 +224,8 @@ void prop()
 void exprbool()
 {
   int t;
-  terminobool();
+  caso=5;
+  expr();
   while(1)
       switch (preanalisis)
       {
@@ -218,68 +239,38 @@ void exprbool()
           t = preanalisis;
           //Revisa que sea el signo correcto
           parea (preanalisis);
-          terminobool();
           emite(t, NINGUNO);
+          expr();
           continue;
       default:
           return;
       }
-}
-
-void terminobool()
-{
-    int t;
-    factorbool();
-    while (1)
-        switch (preanalisis)
-        {
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-        case DIV:
-        case MOD:
-            t = preanalisis;
-            //revisa que sea el símbolo correcto
-            parea(preanalisis);
-            factorbool();
-            emite(t, NINGUNO);
-            continue;
-        default:
-            return;
-        }
-}
-
-void factorbool()
-{
-    //printf("factor\t%d\n", preanalisis);
-    switch (preanalisis)
-    {
-    case NUM:
-      //printf("NUM\n");
-      //  emite(NUM, valcomplex);
-      //printf("NUM %d\n", regnum);
-        parea(NUM);
-        break;
-    case ID:
-        //printf("ID\n");
-        emite(ID, valcomplex);
-        parea(ID);
-        break;
-    default:
-        error("3. error de sintaxis");
-    }
-    regnum++;
+    caso=5;
 }
 
 void opc_prop()
 {
-  prop_list();
+  int t;
+  while(1)
+      switch (preanalisis)
+      {
+      case PROCE:
+          return;
+      default:
+          prop_list();
+          t = preanalisis;
+          if(t==FIN)
+          {
+            parea(preanalisis);
+            opc_prop();
+          }
+          continue;
+      }
 }
 
 //acepta ; como parte de la expresion
 void prop_list()
 {
-  prop_list();
-
+  caso=7;
+  prop();
 }

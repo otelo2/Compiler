@@ -1,3 +1,4 @@
+//Incluir las librerias que vamos a utiliar
 #include <stdio.h> /* carga las rutinas de entrada y salida */
 #include <ctype.h> /* carga las rutinas de prueba de caracteres */
 #include <string.h>
@@ -24,6 +25,12 @@
 #define BIGE 653
 #define EQ 654
 #define NEQ 655
+#define MET 800
+#define VALI 805
+#define VALD 806
+#define ASI 807
+#define TEST 808
+#define METD 810
 #define FIN 59 //ctrl+Z
 
 extern int valcomplex; /* valor del atributo del componente léxico */
@@ -44,9 +51,7 @@ void prop();
 void exprbool();
 void expr();
 void termino();
-void terminobool();
 void factor();
-void factorbool();
 void parea(int t);
 void prop_list();
 void opc_prop();
