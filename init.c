@@ -1,5 +1,6 @@
 #include "global.h"
 
+//Tabla inicial de valores
 struct entrada palsclave[] =
 {
     "div", DIV,

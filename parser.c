@@ -1,25 +1,27 @@
 #include "global.h"
 
 int preanalisis;
-//temporal variables
+//variables temporales
 int temp, tempval, te;
-//id first
+//caso segun el tipo de expresion (afecta a la impresion, etc.)
 int caso;
-//infinite pseudo registers
-int regnum;
+//variable de control dentro de expresiones complejas
 int boo;
 
 void analsint() //Analiza sintácticamente y traduce la lista de la expresión
 {
+    //inicializar las variables
     caso=0;
     boo=0;
+    //analizar el primer caracter o cadena (segun sea el caso)
     preanalisis = analex(caso);
+    //guardar el valor por si es un ID que no se vuelve una asignacion
     temp = preanalisis;
+    //falta comentar desde aquí y lexer.c
     while (preanalisis != FIN)
     {
         caso=0;
         boo=0;
-        regnum=1;
         prop();
         parea(';');
     }
@@ -159,12 +161,16 @@ void prop()
     {
       case ID:
         //temp tiene el ID
+        if (caso==7)
+          t=5;
+        //printf("%d", caso);
         temp=preanalisis;
         tempval=valcomplex;
         preanalisis=analex(caso);
         parea(':');
         //preanalisis=+
-        if(caso==1)
+        //printf("%d", caso);
+        if((caso==1)&&(t!=5))
           expr();
         else
         {
